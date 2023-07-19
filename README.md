@@ -1,1 +1,1 @@
-# Empty project with default git and editor setup
+# Container with dnsmasq
