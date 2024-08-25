@@ -27,11 +27,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set Build Number and Timestamp
+        id: vars
+        run: |
+          echo "BUILD_NUMBER=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+          echo "BUILD_TIMESTAMP=$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ env.IMAGE_NAME }}:build-${{ env.BUILD_NUMBER }}
+            type=raw,value=${{ env.IMAGE_NAME }}:timestamp-${{ env.BUILD_TIMESTAMP }}
 
       - name: Build and push image
         uses: docker/build-push-action@v6
