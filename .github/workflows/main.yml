@@ -39,8 +39,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ env.IMAGE_NAME }}:build-${{ env.BUILD_NUMBER }}
-            type=raw,value=${{ env.IMAGE_NAME }}:timestamp-${{ env.BUILD_TIMESTAMP }}
+            type=raw,value=build-${{ env.BUILD_NUMBER }}
+            type=raw,value=timestamp-${{ env.BUILD_TIMESTAMP }}
 
       - name: Build and push image
         uses: docker/build-push-action@v6
